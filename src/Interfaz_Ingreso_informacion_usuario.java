@@ -158,7 +158,7 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         Enviar_Correo envio = new Enviar_Correo();
         System.out.print(jTextField1.getText());
-        envio.enviar_correo(jTextField1.getText());
+        envio.enviar_correo(jTextField1.getText(),jTextField2.getText(),(String)jComboBox1.getSelectedItem());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

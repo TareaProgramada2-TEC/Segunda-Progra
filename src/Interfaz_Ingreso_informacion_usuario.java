@@ -1,3 +1,7 @@
+
+import java.awt.Component;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,6 +17,7 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
     /**
      * Creates new form Interfaz_Ingreso_informacion_usuario
      */
+    private Component frame;
     public Interfaz_Ingreso_informacion_usuario() {
         initComponents();
     }
@@ -156,9 +161,16 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if (!"".equals(jTextField1.getText()) & !"".equals(jTextField2.getText()) ){
         Enviar_Correo envio = new Enviar_Correo();
         System.out.print(jTextField1.getText());
         envio.enviar_correo(jTextField1.getText(),jTextField2.getText(),(String)jComboBox1.getSelectedItem());
+        JOptionPane.showMessageDialog(frame,"Correo enviado exitosamente");
+        dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(frame,"Por favor ingrese los datos solicitados");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

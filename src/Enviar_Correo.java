@@ -5,13 +5,18 @@
  */
 
 
+
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.*;
-import javax.mail.internet.*;
 import javax.mail.Session;
+import javax.mail.internet.*;
+
 /**
  *
  * @author jhonson
@@ -20,6 +25,9 @@ public class Enviar_Correo {
     String Fecha; 
     String Hora = ""; 
     String FehcaHora;
+    String direccion;
+    String [] arreglo;
+    String NombreBanco;
     /**
      * Metodo para enviar un correo electronico
      * @param Correo Correo del cliente
@@ -29,6 +37,10 @@ public class Enviar_Correo {
      */
      
     public void enviar_correo(String Correo, String Nombre, String Tipo){
+        arreglo = InterfazBienvenida.Retornar_lista();
+        direccion = arreglo[0];
+        NombreBanco = arreglo[1];
+        
         Properties  props= new Properties();                        
         // Nombre del servidor     
         props.setProperty("mail.smtp.host", "smtp.gmail.com");                          
@@ -41,21 +53,40 @@ public class Enviar_Correo {
         props.setProperty("mail.smtp.auth", "true");      
         Session sesion =Session.getDefaultInstance(props,null);
         sesion.setDebug(true);      
-        // Se crea un mensaje vacío      
+        // Se crea un mensaje vacío  
         Message mensaje = new MimeMessage(sesion);      
-        try {                
-            // Cuerpo del mensaje      
-            mensaje.setText("BAC San Jose \n"+"Nombre: "+Nombre+"\n"+"Fecha: "+this.FehcaHora()+"\n"+"Tipo de cliente: "+Tipo);                             
-            String dt="tecnologicodecostarica";            
-            Address address = new InternetAddress(dt,"Banco");      
+        try {   
+            
+
+        BodyPart texto = new MimeBodyPart();
+
+        // Texto del mensaje
+        texto.setText("Nombre del banco: "+arreglo[1]+"\n"+"Nombre: "+Nombre+"\n"+this.FehcaHora()+"\n"+"Tipo de cliente: "+Tipo);
+        BodyPart adjunto = new MimeBodyPart();
+
+        // Cargamos la imagen
+        adjunto.setDataHandler(new DataHandler(new FileDataSource(arreglo[0])));
+
+        // Opcional. De esta forma transmitimos al receptor el nombre original del
+        // fichero de imagen.
+        adjunto.setFileName("a.gif");
+        MimeMultipart multiParte = new MimeMultipart();
+        multiParte.addBodyPart(texto);
+        multiParte.addBodyPart(adjunto);
+        // Cuerpo del mensaje     
+        mensaje.setSubject("Tiquete asignado del banco");                                 
+        String dt="tecnologicodecostarica";            
+        Address address = new InternetAddress(dt,"Banco");      
             mensaje.setFrom(address);                            
             Address address2 = new InternetAddress(Correo,false);
             mensaje.addRecipient(Message.RecipientType.TO,address2);
+            mensaje.setContent(multiParte);
             // Se envía el mensaje      
             Transport InicioSecion = sesion.getTransport("smtp");
             InicioSecion.connect("smtp.gmail.com", "bankito.2014.aviso@gmail.com", "tecnologicodecostarica");        
             InicioSecion.sendMessage(mensaje,mensaje.getAllRecipients());      
-            InicioSecion.close();           
+            InicioSecion.close();  
+            System.out.println(Arrays.toString(arreglo));
         }
         catch (MessagingException | UnsupportedEncodingException e)
         {                            

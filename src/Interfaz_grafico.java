@@ -18,7 +18,6 @@ public class Interfaz_grafico extends javax.swing.JFrame {
      * Creates new form Interfaz_grafico
      */
     JFreeChart Grafica_barra;
-    JFreeChart Grafica_pastel;
     DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
     DefaultCategoryDataset datos_Hora_Día= new DefaultCategoryDataset();
     public Interfaz_grafico() {
@@ -30,9 +29,6 @@ public class Interfaz_grafico extends javax.swing.JFrame {
    datos_tipo.addValue(15,"tipo", "mujer embarazada");
    datos_tipo.addValue(20,"tipo", "cliente corporativo");
    datos_tipo.addValue(25,"tipo", "cliente regular");
-   
-   datos_Hora_Día.addValue(10,"","adult");
-   datos_Hora_Día.addValue(10,"", "embar");
    
    
    Grafica_barra = ChartFactory.createBarChart("Reportes", "Días","Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
@@ -129,18 +125,7 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ChartPanel panel= new ChartPanel(Grafica_pastel);
-        // se crea un nuevo frame
-        JFrame vent=new JFrame("grafica pastel");
-        //se agrega al panel la nueva ventana
-        vent.getContentPane().add(panel);
-        //se resetea la nueva ventana
-        vent.pack();
-        // se hace visible la ventana
-        vent.setVisible(true);
-        // se establce la acción hara ventana cuando
-        //se presione el boton de cerrar
-        vent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -12,26 +12,21 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 import javax.swing.JFrame;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 public class Interfaz_grafico extends javax.swing.JFrame {
 
     /**
      * Creates new form Interfaz_grafico
      */
     JFreeChart Grafica_barra;
-    DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
-    DefaultCategoryDataset datos_Hora_Día= new DefaultCategoryDataset();
+    JFreeChart Grafica_pastel;
+    String tipo[]={"Discapacitados","Adulto mayor","Mujer embarazada", "Cliente corporativo","Cliente regular"};
+    
     public Interfaz_grafico() {
         initComponents();
         setTitle("Reportes");
-  
-   datos_tipo.addValue(1,"tipo", "discapacitados");
-   datos_tipo.addValue(10,"tipo", "adulto mayor");
-   datos_tipo.addValue(15,"tipo", "mujer embarazada");
-   datos_tipo.addValue(20,"tipo", "cliente corporativo");
-   datos_tipo.addValue(25,"tipo", "cliente regular");
-   
-   
-   Grafica_barra = ChartFactory.createBarChart("Reportes", "Días","Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
     }
 
     /**
@@ -109,6 +104,17 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
+        
+        datos_tipo.addValue(5,"tipo", tipo[0]);
+        datos_tipo.addValue(10,"tipo",tipo[1]);
+        datos_tipo.addValue(15,"tipo",tipo[2]);
+        datos_tipo.addValue(20,"tipo",tipo[3]);
+        datos_tipo.addValue(25,"tipo",tipo[4]);
+   
+   
+        Grafica_barra = ChartFactory.createBarChart("Reportes", "tipos","Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
+   
         //se crea un panel y se agreaga la gráfica
         ChartPanel panel= new ChartPanel(Grafica_barra);
         // se crea un nuevo frame
@@ -121,11 +127,34 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         vent.setVisible(true);
         // se establce la acción hara ventana cuando
         //se presione el boton de cerrar
-        vent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vent.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        vent.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+         DefaultPieDataset datos = new DefaultPieDataset();
+
+        datos.setValue(tipo[0], 10);
+        datos.setValue(tipo[1], 20);
+        datos.setValue(tipo[2], 30);
+        datos.setValue(tipo[3], 40);
+        datos.setValue(tipo[4], 50);
+      
+        Grafica_pastel = ChartFactory.createPieChart("Reportes",datos,true,true,false);    
+        //se crea un panel y se agreaga la gráfica
+        ChartPanel panel= new ChartPanel(Grafica_pastel);
+        // se crea un nuevo frame
+        JFrame vent=new JFrame("grafica de pastel");
+        //se agrega al panel la nueva ventana
+        vent.getContentPane().add(panel);
+        //se resetea la nueva ventana
+        vent.pack();
+        // se hace visible la ventana
+        vent.setVisible(true);
+        // se establce la acción hara ventana cuando
+        //se presione el boton de cerrar
+        vent.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        vent.setVisible(true);   
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

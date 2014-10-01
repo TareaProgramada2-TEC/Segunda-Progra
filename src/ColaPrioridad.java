@@ -227,7 +227,6 @@ public class ColaPrioridad {
         String resp=this.regular[this.firstReg];
         this.firstReg=(this.firstReg+1)%this.tamañoMaximo;
         return resp;
-    }
-    
+    }  
 }
 

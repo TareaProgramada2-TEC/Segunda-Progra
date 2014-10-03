@@ -12,9 +12,13 @@ import javax.swing.JOptionPane;
  * @author Alfonso
  */
 public class InterfazBanco extends javax.swing.JFrame {
+    public static ColaCajas colaCorreo;
+    public static ColaCajas colaCaja;
     public static ColaPrioridad cola;
+    public static ColaPrioridad colaC;
     static int cantidadCajeros;
     private Component frame;
+    private static Component frame2;
     /**
      * Creates new form InterfazBanco
      */
@@ -24,33 +28,101 @@ public class InterfazBanco extends javax.swing.JFrame {
      * @param cajeros la cantidad de cajeros disponibles
      */
     public InterfazBanco(int cajeros) {
+        frame2=frame;
         cantidadCajeros=cajeros;
-        System.out.println(cantidadCajeros);
+        cola=new ColaPrioridad(15);
+        colaC=new ColaPrioridad(15);
+        colaCaja=new ColaCajas(cantidadCajeros);
+        colaCorreo=new ColaCajas(cantidadCajeros);
         initComponents();
         this.setResizable(false);
         setDefaultCloseOperation(0);
         setTitle("Banco");
     }
-    
-    public static void manejarCola(String nombre, String tipo){
+    /**
+     * Agrega los clientes en orden de prioridad
+     * @param nombre nombre del cliente
+     * @param tipo  tipo de cliente
+     * @param correo correo del cliente
+     */
+    public static void manejarCola(String nombre, String tipo, String correo){
+        int valor;
+        int estadoCorreo;
         if(tipo.equals("Discapacidad")){
-            cola.agregarDiscapacidad(nombre);
+            valor=cola.agregarDiscapacidad(nombre);
+            estadoCorreo=colaC.agregarDiscapacidad(correo);
+            if (valor==0){
+                JOptionPane.showMessageDialog(frame2,"No hay clientes en la cola"); 
+            }
         }
         else if(tipo.equals("Adulto Mayor")){
-            cola.agregarMayor(nombre);
+            valor=cola.agregarMayor(nombre);
+            estadoCorreo=colaC.agregarMayor(correo);
+            if (valor==0){
+                JOptionPane.showMessageDialog(frame2,"No hay clientes en la cola"); 
+            }
         }
         else if(tipo.equals("Mujer embarazada")){
-            cola.agregarEmbarazada(nombre);
+            valor=cola.agregarEmbarazada(nombre);
+            estadoCorreo=colaC.agregarEmbarazada(correo);
+            if (valor==0){
+                JOptionPane.showMessageDialog(frame2,"No hay clientes en la cola"); 
+            }
         }
         else if(tipo.equals("Cliente corporativo")){
-            cola.agregarCorporativo(nombre);
+            valor=cola.agregarCorporativo(nombre);
+            estadoCorreo=colaC.agregarCorporativo(correo);
+            if (valor==0){
+                JOptionPane.showMessageDialog(frame2,"No hay clientes en la cola"); 
+            }
         }
         else{
-            cola.agregarRegular(nombre);
-        }   
+            valor=cola.agregarRegular(nombre);
+            estadoCorreo=colaC.agregarRegular(correo);
+            if (valor==0){
+                JOptionPane.showMessageDialog(frame2,"No hay clientes en la cola"); 
+            }
+        }
+        manejoClientes();
     }
-        
-
+    
+    /**
+     * Para pasar a los clientes a las cajas
+     */
+    public static void manejoClientes(){
+        int valor;
+        String nombreCliente;
+        if (colaCaja.getSize()>=cantidadCajeros){
+            JOptionPane.showMessageDialog(frame2,"No hay cajas disponibles, proceda ha sacar clientes");
+        }
+        else{
+            if(!(nombreCliente=cola.sacarDiscapacidad()).equals("0")){
+                valor=colaCaja.agregarCliente(nombreCliente);
+                colaCorreo.agregarCliente(colaC.sacarDiscapacidad());
+                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                }
+            else if(!(nombreCliente=cola.sacarMayor()).equals("0")){
+                valor=colaCaja.agregarCliente(nombreCliente);
+                colaCorreo.agregarCliente(colaC.sacarMayor());
+                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+            }
+            else if(!(nombreCliente=cola.sacarEmbarazada()).equals("0")){
+                valor=colaCaja.agregarCliente(nombreCliente);
+                colaCorreo.agregarCliente(colaC.sacarEmbarazada());
+                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+            }
+            else if(!(nombreCliente=cola.sacarCorporativo()).equals("0")){
+                valor=colaCaja.agregarCliente(nombreCliente);
+                colaCorreo.agregarCliente(colaC.sacarCorporativo());
+                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+            }
+            else if(!(nombreCliente=cola.sacarRegular()).equals("0")){
+                valor=colaCaja.agregarCliente(nombreCliente);
+                colaCorreo.agregarCliente(colaC.sacarRegular());
+                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +136,6 @@ public class InterfazBanco extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +146,7 @@ public class InterfazBanco extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Ver caja");
+        jButton4.setText("Desocupar Caja");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -97,12 +168,6 @@ public class InterfazBanco extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,18 +177,15 @@ public class InterfazBanco extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,8 +195,7 @@ public class InterfazBanco extends javax.swing.JFrame {
                 .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -150,23 +211,14 @@ public class InterfazBanco extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(jTextField2.getText().equals("")){
-            JOptionPane.showMessageDialog(frame,"Tiene que escribir un numero");
+        String cliente=colaCaja.sacarCliente();
+        if(!cliente.equals("0")){
+            JOptionPane.showMessageDialog(frame,"El cliente: "+cliente+"  fue atendido exitosamente y procedera a salir del banco");
+            manejoClientes();
         }
         else{
-            try{
-                int caja = Integer.parseInt(jTextField2.getText());
-                if(cantidadCajeros<caja){
-                    JOptionPane.showMessageDialog(frame,"No hay tantas cajas disponibles");
-                }
-                if(caja<0){
-                    JOptionPane.showMessageDialog(frame,"Numeros positivos solamente");
-                }
-            }
-            catch(NumberFormatException x){
-                JOptionPane.showMessageDialog(frame,"Solo numeros");
-            }
-        }
+            JOptionPane.showMessageDialog(frame,"No hay clientes en la cola");  
+        }  
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -180,10 +232,6 @@ public class InterfazBanco extends javax.swing.JFrame {
         Interfaz_Ingreso_informacion_usuario Informacion = new Interfaz_Ingreso_informacion_usuario();
         Informacion.main();
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -225,6 +273,5 @@ public class InterfazBanco extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

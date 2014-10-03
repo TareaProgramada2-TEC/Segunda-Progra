@@ -45,7 +45,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Agrega un cliente con discapacidad
      * @param nombre nombre de la persona
      * @return 1 si se agrego bien, 0 si la lista esta llena
      */
@@ -67,7 +67,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Saca a un cliente con discapacidad
      * @return "0" si esta vacia, resp si hay alguien en la cola
      */
     
@@ -82,7 +82,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Agrega un cliente adulto mayor
      * @param nombre nombre de la persona
      * @return 1 si se agrego bien, 0 si la lista esta llena
      */
@@ -104,7 +104,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Saca un cliente adulto mayor
      * @return "0" si esta vacia, resp si hay alguien en la cola
      */
     
@@ -119,7 +119,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Agrega una clienta enbarazada
      * @param nombre nombre de la persona
      * @return 1 si se agrego bien, 0 si la lista esta llena
      */
@@ -141,7 +141,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Saca a una cliente embarazada
      * @return "0" si esta vacia, resp si hay alguien en la cola
      */
     
@@ -156,7 +156,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Agrega un cliente corporativo
      * @param nombre nombre de la persona
      * @return 1 si se agrego bien, 0 si la lista esta llena
      */
@@ -178,7 +178,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Saca un cliente corporativo
      * @return "0" si esta vacia, resp si hay alguien en la cola
      */
     
@@ -193,7 +193,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Agrega un cliente regular
      * @param nombre nombre de la persona
      * @return 1 si se agrego bien, 0 si la lista esta llena
      */
@@ -215,7 +215,7 @@ public class ColaPrioridad {
     }
     
     /**
-     * 
+     * Saca un cliente regular
      * @return "0" si esta vacia, resp si hay alguien en la cola
      */
     

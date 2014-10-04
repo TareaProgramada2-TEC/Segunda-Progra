@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -37,8 +38,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,32 +55,55 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Ver Datos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Lista de clientes");
+
+        jButton3.setText("Ordenar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Lista de clientes");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Nombre", "Tipo","Correo","Fecha","Hora"}));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(544, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(301, 301, 301)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(301, 301, 301)
-                .addComponent(jLabel1)
+                .addGap(32, 32, 32)
+                .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -88,21 +113,93 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton1)
-                .addGap(60, 60, 60))
+                .addGap(27, 27, 27)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3)
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    /**
-     * Metodo para ingresar los datos de los clietes a la tabla
-     * @param evt 
-     */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    public void LimpiarTabla(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        for (int i=0; i<Contador;i++){
+            Modelo.removeRow(0);
+        }
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if("Nombre".equals((String)jComboBox1.getSelectedItem())){
+            Ordenar_por_nombre();
+        }
+        if("Correo".equals((String)jComboBox1.getSelectedItem())){
+            Ordenar_por_Correo();
+        }
+                
+ 
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void Ordenar_por_nombre(){
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=0;
+        String [] ordenado;
+        String [] Temporal=new String [Contador];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+                Temporal[i]=Datos_clientes[Contador2];
+                Contador2=Contador2+5;  
+            }
+        ordenado=Ordenar.Ordenamiento(Temporal);
+        LimpiarTabla();
+        int contador5=0;
+        for (int i=0; i<Contador;i++){
+            while(!ordenado[i].equals(Datos_clientes[contador5])){
+                contador5=contador5+5;
+            }
+            String [] Temporal2=new String [5];
+            Temporal2[0]=Datos_clientes[contador5];
+            Temporal2[1]=Datos_clientes[contador5+1];
+            Temporal2[2]=Datos_clientes[contador5+2];
+            Temporal2[3]=Datos_clientes[contador5+3];
+            Temporal2[4]=Datos_clientes[contador5+4];
+            Modelo.addRow(Temporal2);
+            contador5=0;
+            
+         
+        }
+    }
+    public void Ordenar_por_Correo(){
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=2;
+        String [] ordenado;
+        String [] Temporal=new String [Contador];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+                Temporal[i]=Datos_clientes[Contador2];
+                Contador2=Contador2+5;  
+            }
+        ordenado=Ordenar.Ordenamiento(Temporal);
+        LimpiarTabla();
+        int contador5=2;
+        for (int i=0; i<Contador;i++){
+            while(!ordenado[i].equals(Datos_clientes[contador5])){
+                contador5=contador5+5;
+            }
+            String [] Temporal2=new String [5];
+            Temporal2[0]=Datos_clientes[contador5-2];
+            Temporal2[1]=Datos_clientes[contador5-1];
+            Temporal2[2]=Datos_clientes[contador5];
+            Temporal2[3]=Datos_clientes[contador5+1];
+            Temporal2[4]=Datos_clientes[contador5+2];
+            Modelo.addRow(Temporal2);
+            contador5=2;
+        }
+    }
+    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+        // TODO add your handling code here:
+         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=0;
         int Contador4=0;
         String [] Temporal=new String [5];
@@ -116,7 +213,12 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             Modelo.addRow(Temporal);
             Contador4 = 0;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    }//GEN-LAST:event_jTable1AncestorAdded
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      */
@@ -153,7 +255,8 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

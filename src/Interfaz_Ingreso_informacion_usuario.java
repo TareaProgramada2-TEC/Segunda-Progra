@@ -1,5 +1,7 @@
 
 import java.awt.Component;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /*
@@ -13,7 +15,12 @@ import javax.swing.JOptionPane;
  * @author jhonson
  */
 public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
-
+    static Lista Datos_clientes = new Lista();
+    String Fecha; 
+    String Hora = ""; 
+    String [] FehcaHora = new String[2];
+    static String [] ArregloDatos;
+    static int Contador =0;
     /**
      * Creates new form Interfaz_Ingreso_informacion_usuario
      */
@@ -181,16 +188,60 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!"".equals(jTextField1.getText()) & !"".equals(jTextField2.getText()) ){
             Enviar_Correo envio = new Enviar_Correo();
-            envio.enviar_correo(jTextField1.getText(),jTextField2.getText(),(String)jComboBox1.getSelectedItem());
+            FehcaHora();
+            envio.enviar_correo(jTextField1.getText(),jTextField2.getText(),(String)jComboBox1.getSelectedItem(),"Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             JOptionPane.showMessageDialog(frame,"Un correo ha sido enviado a la direccion previamente escrita");
             InterfazBanco.manejarCola(jTextField2.getText(),(String)jComboBox1.getSelectedItem(),jTextField1.getText());
+            Datos_clientes.agregar(jTextField2.getText());
+            Datos_clientes.agregar((String)jComboBox1.getSelectedItem());
+            Datos_clientes.agregar(jTextField1.getText());
+            Datos_clientes.agregar(FehcaHora[0]);
+            Datos_clientes.agregar(FehcaHora[1]);
+            Contador++;
             dispose();
         }
         else{
             JOptionPane.showMessageDialog(frame,"Por favor ingrese los datos solicitados");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    /**
+     * Metodo para tomar la facha del sistema para el envio del correo
+     * @return Devuelve un String con fecha y hora actual
+     */  
+    public String [] FehcaHora(){
+        //Instanciamos el objeto Calendar
+        //en fecha obtenemos la fecha y hora del sistema
+        Calendar fecha = new GregorianCalendar();
+        //Obtenemos el valor del año, mes, día,
+        //hora, minuto y segundo del sistema
+        //usando el método get y el parámetro correspondiente
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto = fecha.get(Calendar.MINUTE);
+        int segundo = fecha.get(Calendar.SECOND);
+        Fecha = dia + "/" + (mes+1) + "/" + año;
+        Hora= Integer.toString(hora)+":"+Integer.toString(minuto)+":"+Integer.toString(segundo);
+        FehcaHora[0]=Fecha;
+        FehcaHora[1] =Hora;
+        return FehcaHora;
+    }
+    /**
+     * 
+     * @return Devuelve un arreglo con los datos de todos los clientes
+     */
+    public static String [] DevolverDatos(){
+        ArregloDatos =Datos_clientes.recorrer();
+        return ArregloDatos; 
+    }
+    /**
+     * 
+     * @return Devuelve la cantidad de clientes registrados
+     */
+    public static int DevolverContador(){
+        return Contador;
+    }
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -201,7 +252,6 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
-     * @param args the command line arguments
      */
     public static void main() {
         /* Set the Nimbus look and feel */

@@ -7,9 +7,6 @@
 
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -22,9 +19,6 @@ import javax.mail.internet.*;
  * @author jhonson
  */
 public class Enviar_Correo {
-    String Fecha; 
-    String Hora = ""; 
-    String FehcaHora;
     String direccion;
     String [] arreglo;
     String NombreBanco;
@@ -33,10 +27,11 @@ public class Enviar_Correo {
      * @param Correo Correo del cliente
      * @param Nombre Nombre del cliente
      * @param Tipo   Tipo de usuario que es el cliente
+     * @param Fecha Resive la fecha de ingreso del cliente
      * 
      */
      
-    public void enviar_correo(String Correo, String Nombre, String Tipo){
+    public void enviar_correo(String Correo, String Nombre, String Tipo, String Fecha){
         arreglo = InterfazBienvenida.Retornar_lista();
         direccion = arreglo[0];
         NombreBanco = arreglo[1];
@@ -61,7 +56,7 @@ public class Enviar_Correo {
         BodyPart texto = new MimeBodyPart();
 
         // Texto del mensaje
-        texto.setText("Nombre del banco: "+arreglo[1]+"\n"+"Nombre: "+Nombre+"\n"+this.FehcaHora()+"\n"+"Tipo de cliente: "+Tipo);
+        texto.setText("Nombre del banco: "+arreglo[1]+"\n"+"Nombre: "+Nombre+"\n"+Fecha+"\n"+"Tipo de cliente: "+Tipo);
         BodyPart adjunto = new MimeBodyPart();
 
         // Cargamos la imagen
@@ -86,34 +81,11 @@ public class Enviar_Correo {
             InicioSecion.connect("smtp.gmail.com", "bankito.2014.aviso@gmail.com", "tecnologicodecostarica");        
             InicioSecion.sendMessage(mensaje,mensaje.getAllRecipients());      
             InicioSecion.close();  
-            System.out.println(Arrays.toString(arreglo));
         }
         catch (MessagingException | UnsupportedEncodingException e)
         {                            
  }                       
  }
-    /**
-     * Metodo para tomar la facha del sistema para el envio del correo
-     * @return Devuelve un String con fecha y hora actual
-     */  
-    public String FehcaHora(){
-        //Instanciamos el objeto Calendar
-        //en fecha obtenemos la fecha y hora del sistema
-        Calendar fecha = new GregorianCalendar();
-        //Obtenemos el valor del año, mes, día,
-        //hora, minuto y segundo del sistema
-        //usando el método get y el parámetro correspondiente
-        int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH);
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        int hora = fecha.get(Calendar.HOUR_OF_DAY);
-        int minuto = fecha.get(Calendar.MINUTE);
-        int segundo = fecha.get(Calendar.SECOND);
-        Fecha = "Fecha: "+ dia + "/" + (mes+1) + "/" + año;
-        Hora= "Hora: "+Integer.toString(hora)+":"+Integer.toString(minuto)+":"+Integer.toString(segundo);
-        FehcaHora = Fecha +" "+ Hora;
-        return FehcaHora;
-    }
 }
     
     

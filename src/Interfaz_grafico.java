@@ -7,6 +7,7 @@
  *
  * @author José Luis
  */
+import java.util.Arrays;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.*;
@@ -23,7 +24,7 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     JFreeChart Grafica_barra;
     JFreeChart Grafica_pastel;
     String tipo[]={"Discapacitados","Adulto mayor","Mujer embarazada", "Cliente corporativo","Cliente regular"};
-    
+    String [] Datos_clientes;
     public Interfaz_grafico() {
         initComponents();
         setTitle("Reportes");
@@ -42,6 +43,7 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +69,13 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Reportes:cantidad de clientes por Hora y Día.");
 
+        jButton3.setText("Prueba lista");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,7 +92,10 @@ public class Interfaz_grafico extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)))))
+                                .addComponent(jButton2))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(jButton3)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,7 +109,9 @@ public class Interfaz_grafico extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(jButton3)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,10 +175,17 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         vent.setVisible(true);   
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        //a mi me funciona bien seguro usted la tenia declarada dentro del metoso y solo existe en ese metodo
+        Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        System.out.println(Arrays.toString(Datos_clientes));
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -198,6 +219,7 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

@@ -1,5 +1,4 @@
 
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -311,7 +310,6 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                 Contador2=Contador2+5;  
             }
         ordenado=Ordenar.Ordenamiento(Temporal);
-        System.out.println(Arrays.toString(ordenado));
         LimpiarTabla();
         int contador5=4;
         for (int i=0; i<Contador;i++){

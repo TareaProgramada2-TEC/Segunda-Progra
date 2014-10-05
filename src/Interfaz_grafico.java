@@ -103,6 +103,10 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Este es el metodo que le devuelve el arreglo con la informacion de todos los clientes
+    //String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+    //Este devuelve la cantidad de clientes registrados
+    //int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
         

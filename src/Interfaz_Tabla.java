@@ -41,6 +41,8 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +68,7 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setFont(new java.awt.Font("URW Palladio L", 1, 24)); // NOI18N
         jLabel1.setText("Lista de clientes");
 
         jButton3.setText("Ordenar");
@@ -82,42 +85,58 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Seleccion de orden");
+
+        jButton1.setText("Atras");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(301, 301, 301)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabel2)
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel1))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jButton3)))
+                .addContainerGap(250, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addGap(38, 38, 38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
         );
 
         pack();
@@ -137,6 +156,16 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         if("Correo".equals((String)jComboBox1.getSelectedItem())){
             Ordenar_por_Correo();
         }
+        if("Tipo".equals((String)jComboBox1.getSelectedItem())){
+            Ordenar_por_Tipo();
+        }
+        if("Fecha".equals((String)jComboBox1.getSelectedItem())){
+            Ordenar_por_Fecha();
+        }
+        if("Hora".equals((String)jComboBox1.getSelectedItem())){
+            Ordenar_por_Hora();
+        }
+        
                 
  
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -165,7 +194,103 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             Temporal2[3]=Datos_clientes[contador5+3];
             Temporal2[4]=Datos_clientes[contador5+4];
             Modelo.addRow(Temporal2);
+            Datos_clientes[contador5]="";
             contador5=0;
+            
+            
+         
+        }
+    }
+    public void Ordenar_por_Tipo(){
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=1;
+        String [] ordenado;
+        String [] Temporal=new String [Contador];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+                Temporal[i]=Datos_clientes[Contador2];
+                Contador2=Contador2+5;  
+            }
+        ordenado=Ordenar.Ordenamiento(Temporal);
+        LimpiarTabla();
+        int contador5=1;
+        for (int i=0; i<Contador;i++){
+            while(!ordenado[i].equals(Datos_clientes[contador5])){
+                contador5=contador5+5;
+            }
+            String [] Temporal2=new String [5];
+            Temporal2[0]=Datos_clientes[contador5-1];
+            Temporal2[1]=Datos_clientes[contador5];
+            Temporal2[2]=Datos_clientes[contador5+1];
+            Temporal2[3]=Datos_clientes[contador5+2];
+            Temporal2[4]=Datos_clientes[contador5+3];
+            Modelo.addRow(Temporal2);
+            Datos_clientes[contador5]="";
+            contador5=1;
+            
+            
+         
+        }
+    }
+    public void Ordenar_por_Fecha(){
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=3;
+        String [] ordenado;
+        String [] Temporal=new String [Contador];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+                Temporal[i]=Datos_clientes[Contador2];
+                Contador2=Contador2+5;  
+            }
+        ordenado=Ordenar.Ordenamiento(Temporal);
+        LimpiarTabla();
+        int contador5=3;
+        for (int i=0; i<Contador;i++){
+            while(!ordenado[i].equals(Datos_clientes[contador5])){
+                contador5=contador5+5;
+            }
+            String [] Temporal2=new String [5];
+            Temporal2[0]=Datos_clientes[contador5-3];
+            Temporal2[1]=Datos_clientes[contador5-2];
+            Temporal2[2]=Datos_clientes[contador5-1];
+            Temporal2[3]=Datos_clientes[contador5];
+            Temporal2[4]=Datos_clientes[contador5+1];
+            Modelo.addRow(Temporal2);
+            Datos_clientes[contador5]="";
+            contador5=3;
+            
+            
+         
+        }
+    }
+    public void Ordenar_por_Hora(){
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=4;
+        String [] ordenado;
+        String [] Temporal=new String [Contador];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+                Temporal[i]=Datos_clientes[Contador2];
+                Contador2=Contador2+5;  
+            }
+        ordenado=Ordenar.Ordenamiento(Temporal);
+        System.out.println(Arrays.toString(ordenado));
+        LimpiarTabla();
+        int contador5=4;
+        for (int i=0; i<Contador;i++){
+            while(!ordenado[i].equals(Datos_clientes[contador5])){
+                contador5=contador5+5;
+            }
+            String [] Temporal2=new String [5];
+            Temporal2[0]=Datos_clientes[contador5-4];
+            Temporal2[1]=Datos_clientes[contador5-3];
+            Temporal2[2]=Datos_clientes[contador5-2];
+            Temporal2[3]=Datos_clientes[contador5-1];
+            Temporal2[4]=Datos_clientes[contador5];
+            Modelo.addRow(Temporal2);
+            Datos_clientes[contador5]="";
+            contador5=4;
+            
             
          
         }
@@ -194,7 +319,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             Temporal2[3]=Datos_clientes[contador5+1];
             Temporal2[4]=Datos_clientes[contador5+2];
             Modelo.addRow(Temporal2);
+            Datos_clientes[contador5]="";
             contador5=2;
+            
         }
     }
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
@@ -219,6 +346,11 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      */
@@ -255,9 +387,11 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -220,9 +220,8 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         int minuto = fecha.get(Calendar.MINUTE);
-        int segundo = fecha.get(Calendar.SECOND);
         Fecha = dia + "/" + (mes+1) + "/" + año;
-        Hora= Integer.toString(hora)+":"+Integer.toString(minuto)+":"+Integer.toString(segundo);
+        Hora= Integer.toString(hora)+":"+Integer.toString(minuto);
         FehcaHora[0]=Fecha;
         FehcaHora[1] =Hora;
         return FehcaHora;

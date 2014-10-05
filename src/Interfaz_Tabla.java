@@ -43,6 +43,8 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,12 +60,12 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             }
         ));
         jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTable1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -94,6 +96,13 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Filtrar por fecha");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,14 +111,22 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel1))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(86, 86, 86)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jButton3)))
+                        .addGap(0, 238, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton3)))
-                .addContainerGap(250, Short.MAX_VALUE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
@@ -130,7 +147,10 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,13 +161,19 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+    /**
+     * Vacia la tabla de los clientes
+     */
     public void LimpiarTabla(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         for (int i=0; i<Contador;i++){
             Modelo.removeRow(0);
         }
     }
+    /**
+     * Metodo para elegir el ordenaiento de la tabla
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         if("Nombre".equals((String)jComboBox1.getSelectedItem())){
@@ -169,7 +195,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                 
  
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    /**
+     * Ordena la tabla por nombres
+     */
     public void Ordenar_por_nombre(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=0;
@@ -201,6 +229,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
          
         }
     }
+    /**
+     * Ordena la tabla por tipo de usuario
+     */
     public void Ordenar_por_Tipo(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=1;
@@ -232,6 +263,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
          
         }
     }
+    /**
+     * Ordena la tabla por fehca de ingreso
+     */
     public void Ordenar_por_Fecha(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=3;
@@ -263,6 +297,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
          
         }
     }
+    /**
+     * Ordena la tabla por hora de ingreso
+     */
     public void Ordenar_por_Hora(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=4;
@@ -295,6 +332,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
          
         }
     }
+    /**
+     * Ordena la tabla por correos  electronicos
+     */
     public void Ordenar_por_Correo(){
         int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
         int Contador2=2;
@@ -324,6 +364,10 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
             
         }
     }
+    /**
+     * Ingresa los datos de los clientes a la tabla
+     * @param evt 
+     */
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
         // TODO add your handling code here:
          int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
@@ -351,6 +395,39 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    /**
+     * Filtra la tabla por fachas
+     * @param evt 
+     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+        LimpiarTabla();}
+        catch(java.lang.ArrayIndexOutOfBoundsException e){
+        }
+        int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
+        int Contador2=0;
+        int Contador4=0;
+        int Contador6=3;
+        String [] Temporal=new String [5];
+        String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
+        for (int i=0; i<Contador;i++){
+            if(jTextField1.getText().equals(Datos_clientes[Contador6])){
+            while(Contador4<5){
+                Temporal[Contador4]=Datos_clientes[Contador2];
+                Contador4++;
+                Contador2++;  
+            }
+            Contador4 = 0;
+            Modelo.addRow(Temporal);
+            }
+            else{
+                Contador2=Contador2+5;
+            }
+            Contador6=Contador6+5; 
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      */
@@ -388,11 +465,13 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

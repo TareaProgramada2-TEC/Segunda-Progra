@@ -141,7 +141,10 @@ public class InterfazBienvenida extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Se compruevan todos los datos que sean correctos
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (!"".equals(jTextField2.getText()) & !"".equals(direccion)){
@@ -171,6 +174,10 @@ public class InterfazBienvenida extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame,"Por favor ingrese el nombre del banco y seleccione el logo");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+    /**
+     * Retorna informacion del banco
+     * @return Retorna una lista con el nombre del banco y la direccion de la imagen
+     */
     public static String [] Retornar_lista(){
         return ListaDatos;
     }
@@ -183,7 +190,10 @@ public class InterfazBienvenida extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+    /**
+     * Codigo para seleccionar la imagen
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         JFileChooser buscador = new JFileChooser();

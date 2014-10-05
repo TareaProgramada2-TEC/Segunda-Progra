@@ -290,6 +290,10 @@ public class InterfazBanco extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Se carga la imagen elegida por el banco
+     * @param evt 
+     */
     private void jLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel1AncestorAdded
         // TODO add your handling code here:
         BancoImagen = InterfazBienvenida.Retornar_lista();

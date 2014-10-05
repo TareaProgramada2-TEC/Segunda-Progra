@@ -2,6 +2,8 @@
 import java.awt.Component;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /*
@@ -183,10 +185,14 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
-
+    /**
+     * Se comprueban los datos que sean correstos y se envia el correo electronico
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (!"".equals(jTextField1.getText()) & !"".equals(jTextField2.getText()) ){
+            if(ComprovarCorreo(jTextField1.getText())){
             Enviar_Correo envio = new Enviar_Correo();
             FehcaHora();
             envio.enviar_correo(jTextField1.getText(),jTextField2.getText(),(String)jComboBox1.getSelectedItem(),"Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
@@ -198,7 +204,10 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
             Datos_clientes.agregar(FehcaHora[0]);
             Datos_clientes.agregar(FehcaHora[1]);
             Contador++;
-            dispose();
+            dispose();}
+            else{
+                JOptionPane.showMessageDialog(frame,"Correo invalido");
+            }
         }
         else{
             JOptionPane.showMessageDialog(frame,"Por favor ingrese los datos solicitados");
@@ -249,7 +258,23 @@ public class Interfaz_Ingreso_informacion_usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    /**
+     * Comprueba la sintaxis del correo electronico para que sea valido
+     * @param correo Correo electronico del usuario
+     * @return Falso o verdadero si esta correcto
+     */
+    public boolean ComprovarCorreo(String correo){
+        Pattern Plantilla = null;
+        Matcher Resultado = null;
+        Plantilla = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        Resultado = Plantilla.matcher(correo);
+        if(Resultado.find()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     /**
      */
     public static void main() {

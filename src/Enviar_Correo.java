@@ -15,7 +15,7 @@ import javax.mail.Session;
 import javax.mail.internet.*;
 
 /**
- *
+ *Envia el correo alectronico con la informacion del usuario y el logo del banco
  * @author jhonson
  */
 public class Enviar_Correo {
@@ -30,16 +30,14 @@ public class Enviar_Correo {
      * @param Fecha Resive la fecha de ingreso del cliente
      * 
      */
-     
     public void enviar_correo(String Correo, String Nombre, String Tipo, String Fecha){
         arreglo = InterfazBienvenida.Retornar_lista();
         direccion = arreglo[0];
         NombreBanco = arreglo[1];
-        
         Properties  props= new Properties();                        
         // Nombre del servidor     
         props.setProperty("mail.smtp.host", "smtp.gmail.com");                          
-        // TLS establecerlo disponible      
+        // establecerlo disponible      
         props.setProperty("mail.smtp.starttls.enable", "true");                     
         // Puerto de gmail para envio de correos 
         //Autenticacion de usuario y uso del puesto para enviar
@@ -51,17 +49,12 @@ public class Enviar_Correo {
         // Se crea un mensaje vacío  
         Message mensaje = new MimeMessage(sesion);      
         try {   
-            
-
         BodyPart texto = new MimeBodyPart();
-
         // Texto del mensaje
         texto.setText("Nombre del banco: "+arreglo[1]+"\n"+"Nombre: "+Nombre+"\n"+Fecha+"\n"+"Tipo de cliente: "+Tipo);
         BodyPart adjunto = new MimeBodyPart();
-
         // Cargamos la imagen
         adjunto.setDataHandler(new DataHandler(new FileDataSource(arreglo[0])));
-
         // Opcional. De esta forma transmitimos al receptor el nombre original del
         // fichero de imagen.
         adjunto.setFileName("a.gif");

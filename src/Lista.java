@@ -5,7 +5,7 @@
  */
 
 /**
- *
+ *Creacion de la lista por medio de nodos
  * @author jhonson
  */
 public class Lista {
@@ -14,7 +14,10 @@ public class Lista {
     int Contador = 0;
     String [] Arreglo;
     int Tamaño = 0; 
-    
+    /**
+     * Se agrega un elemento a la lista de nodos
+     * @param Dato 
+     */
     public void agregar(String Dato){
         Nodo dato= new Nodo(Dato);
         if (primer==null){
@@ -27,6 +30,10 @@ public class Lista {
         }
         Tamaño ++;
     }
+    /**
+     * Recorre la lista de nodos 
+     * @return Duvuelve un arreglo de los datos recorridos
+     */
     public String [] recorrer(){
         Contador = 0;
         Arreglo = new String [Tamaño];

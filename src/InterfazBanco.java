@@ -1,6 +1,8 @@
 
 import java.awt.Component;
 import java.awt.Image;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,6 +28,9 @@ public class InterfazBanco extends javax.swing.JFrame {
     String [] BancoImagen;
     ImageIcon imagen;
     JLabel etiquetaFondo;
+    static String Fecha; 
+    static String Hora = ""; 
+    static String [] FehcaHora = new String[2];
     /**
      * Creates new form InterfazBanco
      */
@@ -45,6 +50,28 @@ public class InterfazBanco extends javax.swing.JFrame {
         this.setResizable(false);
         setDefaultCloseOperation(0);
         setTitle("Banco");
+    }
+        /**
+     * Metodo para tomar la facha del sistema para el envio del correo
+     * @return Devuelve un String con fecha y hora actual
+     */  
+    public static String [] FehcaHora(){
+        //Instanciamos el objeto Calendar
+        //en fecha obtenemos la fecha y hora del sistema
+        Calendar fecha = new GregorianCalendar();
+        //Obtenemos el valor del año, mes, día,
+        //hora, minuto y segundo del sistema
+        //usando el método get y el parámetro correspondiente
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto = fecha.get(Calendar.MINUTE);
+        Fecha = dia + "/" + (mes+1) + "/" + año;
+        Hora= Integer.toString(hora)+":"+Integer.toString(minuto);
+        FehcaHora[0]=Fecha;
+        FehcaHora[1] =Hora;
+        return FehcaHora;
     }
     /**
      * Agrega los clientes en orden de prioridad
@@ -106,27 +133,37 @@ public class InterfazBanco extends javax.swing.JFrame {
             if(!(nombreCliente=cola.sacarDiscapacidad()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarDiscapacidad());
-                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                Enviar_Correo envio = new Enviar_Correo();
+                FehcaHora();
+                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Discapacidad","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
                 }
             else if(!(nombreCliente=cola.sacarMayor()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarMayor());
-                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                Enviar_Correo envio = new Enviar_Correo();
+                FehcaHora();
+                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Adulto mayor","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarEmbarazada()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarEmbarazada());
-                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                Enviar_Correo envio = new Enviar_Correo();
+                FehcaHora();
+                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Mujer Embarazada","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarCorporativo()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarCorporativo());
-                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                Enviar_Correo envio = new Enviar_Correo();
+                FehcaHora();
+                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Cliente corporativo","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarRegular()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarRegular());
-                //AQUI SE PONE LO DE MANDAR EL CORREO colaCorreo.sacarCliente(); para obtener el correo
+                Enviar_Correo envio = new Enviar_Correo();
+                FehcaHora();
+                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Cliente regular","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
                 }
         }
     }
@@ -277,6 +314,7 @@ public class InterfazBanco extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String cliente=colaCaja.sacarCliente();
+        colaCorreo.sacarCliente();
         if(!cliente.equals("0")){
             JOptionPane.showMessageDialog(frame,"El cliente: "+cliente+"  fue atendido exitosamente y procedera a salir del banco");
             manejoClientes();

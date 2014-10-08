@@ -63,5 +63,8 @@ public class ColaCajas {
         this.first=(this.first+1)%this.maxSize;
         return resp;
     } 
+    public String correo(){
+        return this.colaCaja[this.first];
+    }
 }
 

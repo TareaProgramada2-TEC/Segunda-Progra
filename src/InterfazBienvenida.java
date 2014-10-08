@@ -203,7 +203,8 @@ public class InterfazBienvenida extends javax.swing.JFrame {
         buscador.setDialogTitle("El logo del banco");
         if (buscador.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
         direccion= buscador.getSelectedFile().toString();}
-        Lista_info_banco.agregar(direccion);
+        if (!"".equals(direccion)){
+        Lista_info_banco.agregar(direccion);}
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

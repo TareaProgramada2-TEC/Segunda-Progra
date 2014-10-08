@@ -8,6 +8,8 @@
  * @author José Luis
  */
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.*;
@@ -16,6 +18,9 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
+import java.io.File;
+import java.util.Locale;
+import org.jfree.chart.ChartUtilities;
 public class Interfaz_grafico extends javax.swing.JFrame {
 
     /**
@@ -23,8 +28,15 @@ public class Interfaz_grafico extends javax.swing.JFrame {
      */
     JFreeChart Grafica_barra;
     JFreeChart Grafica_pastel;
-    String tipo[]={"Discapacitados","Adulto mayor","Mujer embarazada", "Cliente corporativo","Cliente regular"};
-    String [] Datos_clientes;
+    String tipo[]={"Discapacidad","Adulto Mayor","Mujer embarazada", "Cliente corporativo","Cliente regular"};
+    String dias[]={"lunes","marte","miercoles","jueves","viernes","sabado"};
+    static String [] Datos_clientes;
+    static int entero;
+    static String numdia;
+    static int H;
+    static int Contador;
+    static int h;
+    static String cadena;
     public Interfaz_grafico() {
         initComponents();
         setTitle("Reportes");
@@ -43,7 +55,9 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,10 +83,24 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Reportes:cantidad de clientes por Hora y Día.");
 
-        jButton3.setText("Prueba lista");
+        jButton4.setText("Día");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Salir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Hora");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -83,20 +111,27 @@ public class Interfaz_grafico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton4)
+                                        .addGap(99, 99, 99)
+                                        .addComponent(jButton5)))))
+                        .addGap(0, 49, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,37 +144,157 @@ public class Interfaz_grafico extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
-                .addGap(52, 52, 52)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public static int cantDiscapacitados()
+    {
+      Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos(); 
+      int dis=0;
+      for(int i=0;i<Datos_clientes.length;i++)
+      {
+        if("Discapacidad".equals(Datos_clientes[i]))
+        {
+            dis++;
+        }  
+      }
+      return dis;
+    }
+    public static int cantAdulto()
+    {
+      Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos(); 
+      int ad=0;
+      for(int i=0;i<Datos_clientes.length;i++)
+      {
+        if("Adulto Mayor".equals(Datos_clientes[i]))
+        {
+            ad++;
+        }  
+      }
+      return ad;
+    }
+    public static int cantEmbarazada()
+    {
+      Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos(); 
+      int Em=0;
+      for(int i=0;i<Datos_clientes.length;i++)
+      {
+        if("Mujer embarazada".equals(Datos_clientes[i]))
+        {
+            Em++;
+        }  
+      }
+      return Em;
+    }
+    public static int cantCorp()
+    {
+      Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos(); 
+      int co=0;
+      for(int i=0;i<Datos_clientes.length;i++)
+      {
+        if("Cliente corporativo".equals(Datos_clientes[i]))
+        {
+            co++;
+        }  
+      }
+      return co;
+    }
+    
+    public static int cantREG()
+    {
+      Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos(); 
+      int re=0;
+      for(int i=0;i<Datos_clientes.length;i++)
+      {
+        if("Cliente regular".equals(Datos_clientes[i]))
+        {
+            re++;
+        }  
+      }
+      return re;
+    }
+    public static int dato(String dato)
+    {
+       String num=dato;
+       String i=num.substring(0,2);
+       String a=i.substring(1);
+       String dat;
+       if(":".equals(a))
+       {
+           dat=dato.substring(0,1);
+           entero=Integer.parseInt(dat);
+       }
+       else
+       {
+           dat=dato.substring(0,2);
+           entero=Integer.parseInt(dat);
+       }
+       
+       return entero;
+    }
+   
+   /**
+    * 
+    * @return la hora
+    */  
+  public static int hora()
+  {
+   Calendar cal = new GregorianCalendar();
+   H=cal.get(Calendar.HOUR);
+   return H;
+  }
+  public static String cadena()
+  {
+   Calendar cal = new GregorianCalendar();
+   H=cal.get(Calendar.HOUR_OF_DAY);
+   if(H<12)
+   {
+       cadena="am";
+   }
+   else
+   {
+       cadena="pm";
+   }
+   return cadena;
+  }
+  
     //Este es el metodo que le devuelve el arreglo con la informacion de todos los clientes
     //String [] Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
     //Este devuelve la cantidad de clientes registrados
     //int Contador=Interfaz_Ingreso_informacion_usuario.DevolverContador();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
+       
+        int a=Interfaz_grafico.cantDiscapacitados();
+        int b=Interfaz_grafico.cantAdulto();
+        int c=Interfaz_grafico.cantEmbarazada();
+        int d=Interfaz_grafico.cantCorp();
+        int e=Interfaz_grafico.cantREG();
         
-        datos_tipo.addValue(5,"tipo", tipo[0]);
-        datos_tipo.addValue(10,"tipo",tipo[1]);
-        datos_tipo.addValue(15,"tipo",tipo[2]);
-        datos_tipo.addValue(20,"tipo",tipo[3]);
-        datos_tipo.addValue(25,"tipo",tipo[4]);
+        DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
+        datos_tipo.addValue(a,"tipo", tipo[0]);
+        datos_tipo.addValue(b,"tipo",tipo[1]);
+        datos_tipo.addValue(c,"tipo",tipo[2]);
+        datos_tipo.addValue(d,"tipo",tipo[3]);
+        datos_tipo.addValue(e,"tipo",tipo[4]);
    
    
         Grafica_barra = ChartFactory.createBarChart("Reportes", "tipos","Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
-   
+        Grafica_barra.setBackgroundPaint(null);
         //se crea un panel y se agreaga la gráfica
         ChartPanel panel= new ChartPanel(Grafica_barra);
         // se crea un nuevo frame
         JFrame vent=new JFrame("grafica de barras");
         //se agrega al panel la nueva ventana
         vent.getContentPane().add(panel);
-        //se resetea la nueva ventana
+      
         vent.pack();
         // se hace visible la ventana
         vent.setVisible(true);
@@ -150,13 +305,19 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         DefaultPieDataset datos = new DefaultPieDataset();
-
-        datos.setValue(tipo[0], 10);
-        datos.setValue(tipo[1], 20);
-        datos.setValue(tipo[2], 30);
-        datos.setValue(tipo[3], 40);
-        datos.setValue(tipo[4], 50);
+        
+        int a=Interfaz_grafico.cantDiscapacitados();
+        int b=Interfaz_grafico.cantAdulto();
+        int c=Interfaz_grafico.cantEmbarazada();
+        int d=Interfaz_grafico.cantCorp();
+        int e=Interfaz_grafico.cantREG();
+       
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue(tipo[0], a);
+        datos.setValue(tipo[1], b);
+        datos.setValue(tipo[2], c);
+        datos.setValue(tipo[3], d);
+        datos.setValue(tipo[4], e);
       
         Grafica_pastel = ChartFactory.createPieChart("Reportes",datos,true,true,false);    
         //se crea un panel y se agreaga la gráfica
@@ -165,23 +326,133 @@ public class Interfaz_grafico extends javax.swing.JFrame {
         JFrame vent=new JFrame("grafica de pastel");
         //se agrega al panel la nueva ventana
         vent.getContentPane().add(panel);
-        //se resetea la nueva ventana
+        
         vent.pack();
         // se hace visible la ventana
         vent.setVisible(true);
-        // se establce la acción hara ventana cuando
+        // se establce la acción que hara la ventana cuando
         //se presione el boton de cerrar
         vent.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         vent.setVisible(true);   
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        int a=Interfaz_grafico.cantDiscapacitados();
+        int b=Interfaz_grafico.cantAdulto();
+        int c=Interfaz_grafico.cantEmbarazada();
+        int d=Interfaz_grafico.cantCorp();
+        int e=Interfaz_grafico.cantREG();
+        
+        String dia=Interfaz_grafico.día();
+        
+        DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
+        datos_tipo.addValue(a,"tipo", tipo[0]);
+        datos_tipo.addValue(b,"tipo",tipo[1]);
+        datos_tipo.addValue(c,"tipo",tipo[2]);
+        datos_tipo.addValue(d,"tipo",tipo[3]);
+        datos_tipo.addValue(e,"tipo",tipo[4]);
+   
+        Grafica_barra = ChartFactory.createBarChart("Reportes por Día", dia,"Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
+   
+        //se crea un panel y se agrega la gráfica
+        ChartPanel panel= new ChartPanel(Grafica_barra);
+        // se crea un nuevo frame
+        JFrame vent=new JFrame("grafica de barras");
+        //se agrega al panel la nueva ventana
+        vent.getContentPane().add(panel);
+        
+        vent.pack();
+        // se hace visible la ventana
+        vent.setVisible(true);
+        // se establce la acción que hara la ventana cuando
+        //se presione el boton de cerrar
+        vent.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        vent.setVisible(true);   
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        //a mi me funciona bien seguro usted la tenia declarada dentro del metoso y solo existe en ese metodo
-        Datos_clientes=Interfaz_Ingreso_informacion_usuario.DevolverDatos();
-        System.out.println(Arrays.toString(Datos_clientes));
+        dispose();
+        
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    
+        int a=Interfaz_grafico.cantDiscapacitados();
+        int b=Interfaz_grafico.cantAdulto();
+        int c=Interfaz_grafico.cantEmbarazada();
+        int d=Interfaz_grafico.cantCorp();
+        int e=Interfaz_grafico.cantREG();
+        
+        h=Interfaz_grafico.hora();   
+        String hora=Integer.toString(h);
+        String cad=Interfaz_grafico.cadena();  
+        String Hora= hora+""+cad;
+        
+        DefaultCategoryDataset datos_tipo= new DefaultCategoryDataset();
+        datos_tipo.addValue(a,"tipo", tipo[0]);
+        datos_tipo.addValue(b,"tipo",tipo[1]);
+        datos_tipo.addValue(c,"tipo",tipo[2]);
+        datos_tipo.addValue(d,"tipo",tipo[3]);
+        datos_tipo.addValue(e,"tipo",tipo[4]);
+   
+        Grafica_barra = ChartFactory.createBarChart("Reportes Hora", Hora,"Cantidad de clientes", datos_tipo, PlotOrientation.VERTICAL,true,true,false);
+   
+        //se crea un panel y se agrega la gráfica
+        ChartPanel panel= new ChartPanel(Grafica_barra);
+        // se crea un nuevo frame
+        JFrame vent=new JFrame("grafica de barras");
+        //se agrega al panel la nueva ventana
+        vent.getContentPane().add(panel);
+        
+        vent.pack();
+        // se hace visible la ventana
+        vent.setVisible(true);
+        // se establce la acción que hara la ventana cuando
+        //se presione el boton de cerrar
+        vent.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        vent.setVisible(true); 
+      
+    }//GEN-LAST:event_jButton5ActionPerformed
+   /**
+    * 
+    * @return se obtiene el numero de día de la semana..
+    * del sistema.
+    */
+    public static String día()
+        {
+            
+            GregorianCalendar cal = new GregorianCalendar();
+            int dia=cal.get(Calendar.DAY_OF_WEEK);
+            if(dia==2)
+            {
+               numdia="Día: "+"Lunes"; 
+            }
+            if(dia==3)
+            {
+              numdia="Día: "+"Martes";
+            }
+            if(dia==4)
+            {
+               numdia="Día: "+"Miercoles"; 
+            }
+            if(dia==5)
+            {
+              numdia="Día: "+"Jueves";
+            }
+            if(dia==6)
+            {
+               numdia="Día: "+"Viernes"; 
+            }
+            if(dia==7)
+            {
+              numdia="Día: "+"Sábado";
+            }
+            return numdia;
+        }
+     
     /**
      * @param args the command line arguments
      */
@@ -220,6 +491,8 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

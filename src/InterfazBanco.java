@@ -135,35 +135,35 @@ public class InterfazBanco extends javax.swing.JFrame {
                 colaCorreo.agregarCliente(colaC.sacarDiscapacidad());
                 Enviar_Correo envio = new Enviar_Correo();
                 FehcaHora();
-                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Discapacidad","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
+                envio.enviar_correo2(colaCorreo.correo(),nombreCliente,"Discapacidad","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
                 }
             else if(!(nombreCliente=cola.sacarMayor()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarMayor());
                 Enviar_Correo envio = new Enviar_Correo();
                 FehcaHora();
-                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Adulto mayor","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
+                envio.enviar_correo2(colaCorreo.correo(),nombreCliente,"Adulto mayor","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarEmbarazada()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarEmbarazada());
                 Enviar_Correo envio = new Enviar_Correo();
                 FehcaHora();
-                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Mujer Embarazada","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
+                envio.enviar_correo2(colaCorreo.correo(),nombreCliente,"Mujer Embarazada","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarCorporativo()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarCorporativo());
                 Enviar_Correo envio = new Enviar_Correo();
                 FehcaHora();
-                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Cliente corporativo","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
+                envio.enviar_correo2(colaCorreo.correo(),nombreCliente,"Cliente corporativo","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
             }
             else if(!(nombreCliente=cola.sacarRegular()).equals("0")){
                 valor=colaCaja.agregarCliente(nombreCliente);
                 colaCorreo.agregarCliente(colaC.sacarRegular());
                 Enviar_Correo envio = new Enviar_Correo();
                 FehcaHora();
-                envio.enviar_correo(colaCorreo.correo(),nombreCliente,"Cliente regular","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
+                envio.enviar_correo2(colaCorreo.correo(),nombreCliente,"Cliente regular","Fecha: "+FehcaHora[0]+" Hora: "+FehcaHora[1]);
                 }
         }
     }

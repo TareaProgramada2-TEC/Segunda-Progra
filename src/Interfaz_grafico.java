@@ -7,20 +7,15 @@
  *
  * @author José Luis
  */
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
-import java.io.File;
-import java.util.Locale;
-import org.jfree.chart.ChartUtilities;
 public class Interfaz_grafico extends javax.swing.JFrame {
 
     /**
@@ -39,7 +34,9 @@ public class Interfaz_grafico extends javax.swing.JFrame {
     static String cadena;
     public Interfaz_grafico() {
         initComponents();
-        setTitle("Reportes");
+        this.setResizable(false);
+        setDefaultCloseOperation(0);
+        setTitle("Reportes de clientes");
     }
 
     /**

@@ -24,6 +24,9 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
         initComponents();
         Modelo = new DefaultTableModel(Datos, Columnas);
         jTable1.setModel(Modelo);
+        this.setResizable(false);
+        setDefaultCloseOperation(0);
+        setTitle("Tabla de clientes");
     }
 
     /**
@@ -88,7 +91,8 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
 
         jLabel2.setText("Seleccion de orden");
 
-        jButton1.setText("Atras");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel.png"))); // NOI18N
+        jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -145,7 +149,7 @@ public class Interfaz_Tabla extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
